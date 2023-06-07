@@ -1,0 +1,92 @@
+﻿@model DoctorAp.Models.DoctorAp.Models.EmployeePayroll
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>EmployeePayroll</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EmployeeId" class="control-label"></label>
+                <input asp-for="EmployeeId" class="form-control" />
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmployeeName" class="control-label"></label>
+                <input asp-for="EmployeeName" class="form-control" />
+                <span asp-validation-for="EmployeeName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HourlyRate" class="control-label"></label>
+                <input asp-for="HourlyRate" class="form-control" />
+                <span asp-validation-for="HourlyRate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoursWorked" class="control-label"></label>
+                <input asp-for="HoursWorked" class="form-control" />
+                <span asp-validation-for="HoursWorked" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxWithholdingRate" class="control-label"></label>
+                <input asp-for="TaxWithholdingRate" class="form-control" />
+                <span asp-validation-for="TaxWithholdingRate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NetPay" class="control-label"></label>
+                <input asp-for="NetPay" class="form-control" readonly />
+                <span asp-validation-for="NetPay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+
+    .back-link {
+        display: block;
+        margin-top: 20px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+</style>
+<div>
+    <a asp-action="Index" class="back-link">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#HourlyRate, #HoursWorked, #TaxWithholdingRate').on('input', function () {
+                calculateNetPay();
+            });
+
+            function calculateNetPay() {
+                var hourlyRate = parseFloat($('#HourlyRate').val()) || 0;
+                var hoursWorked = parseFloat($('#HoursWorked').val()) || 0;
+                var taxWithholdingRate = parseFloat($('#TaxWithholdingRate').val()) || 0;
+
+                var grossWages = hourlyRate * hoursWorked;
+                var deductions = grossWages * (taxWithholdingRate / 100);
+                var netPay = grossWages - deductions;
+
+                $('#NetPay').val(netPay.toFixed(2));
+            }
+        });
+    </script>
+}

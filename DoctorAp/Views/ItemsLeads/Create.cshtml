@@ -1,0 +1,94 @@
+﻿@model DoctorAp.Models.ItemsLead
+
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<h1>Create</h1>
+
+<h4>Order Supplies</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Item" class="control-label"></label>
+                <select asp-for="Item" class="form-control" asp-items="@((IEnumerable<SelectListItem>)ViewBag.Items)"></select>
+                <span asp-validation-for="Item" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CostPerItem" class="control-label"></label>
+                <input asp-for="CostPerItem" class="form-control" readonly />
+                <span asp-validation-for="CostPerItem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+
+    .back-link {
+        display: block;
+        margin-top: 20px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+</style>
+<div>
+    <a asp-action="Index" class="back-link">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            // Calculate total cost per item on item or quantity change
+            $('#Item, #Quantity').change(function () {
+                var item = $('#Item').val();
+                var quantity = parseInt($('#Quantity').val()) || 0;
+                var costPerItem = calculateCostPerItem(item, quantity);
+                $('#CostPerItem').val(costPerItem.toFixed(2));
+            });
+
+            // Calculate the cost per item based on item and quantity
+            function calculateCostPerItem(item, quantity) {
+                var costPerItem = 0;
+                // Define the cost per item for each item
+                switch (item) {
+                    case 'Concerta':
+                        costPerItem = 10;
+                        break;
+                    case 'Advil':
+                        costPerItem = 5;
+                        break;
+                    case 'Amoxicillin':
+                        costPerItem = 8;
+                        break;
+                    case 'Aspirin':
+                        costPerItem = 3;
+                        break;
+                    case 'Benadryl':
+                        costPerItem = 6;
+                        break;
+                    case 'Ciprofloxacin':
+                        costPerItem = 12;
+                        break;
+                }
+                // Calculate the total cost per item
+                return costPerItem * quantity;
+            }
+        });
+    </script>
+}

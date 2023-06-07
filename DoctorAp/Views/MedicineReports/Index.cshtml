@@ -1,0 +1,113 @@
+﻿@model IEnumerable<DoctorAp.Models.MedicineReport>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Medicine Report</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <h4>Create New Medicine Report</h4>
+
+        <form asp-action="Create">
+            <div class="form-group">
+                <label for="medicinename">Medicine Name:</label>
+                <select id="medicinename" name="medicinename">
+                    <option value="Concerta">Concerta</option>
+                    <option value="Advil">Advil</option>
+                    <option value="Amoxicillin">Amoxicillin</option>
+                    <option value="Aspirin">Aspirin</option>
+                    <option value="Benadryl">Benadryl</option>
+                    <option value="Ciprofloxacin">Ciprofloxacin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dosage">Dosage:</label>
+                <input type="text" id="dosage" name="dosage" />
+            </div>
+            <div class="form-group">
+                <label for="frequency">Frequency:</label>
+                <input type="text" id="frequency" name="frequency" />
+            </div>
+            <div class="form-group">
+                <label for="directionsforuse">Directions for Use:</label>
+                <input type="text" id="directionsforuse" name="directionsforuse" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MedicineName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dosage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Frequency)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DirectionsForUse)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MedicineName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dosage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Frequency)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DirectionsForUse)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn:hover {
+        text-decoration: none;
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>

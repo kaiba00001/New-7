@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .jumbotron {
+            background-image: linear-gradient(to bottom, #007bff, #0056b3);
+            color: #fff;
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+            .jumbotron h1 {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .jumbotron .lead {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .jumbotron .btn-primary {
+                background-color: #fff;
+                color: #007bff;
+                border-color: #007bff;
+                font-size: 1rem;
+                padding: 0.75rem 1.5rem;
+                margin-top: 1rem;
+                transition: all 0.3s ease;
+                border-radius: 3px;
+            }
+
+                .jumbotron .btn-primary:hover {
+                    background-color: #80bdff;
+                    border-color: #fff;
+                }
+
+        .content-section {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 0.25rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            .content-section h2 {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+                color: #333;
+            }
+
+            .content-section p {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+                line-height: 1.5;
+            }
+
+        .contact-section ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1.5rem;
+        }
+
+            .contact-section ul li {
+                margin-bottom: 0.75rem;
+            }
+
+        .footer {
+            padding: 1rem 0;
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+        }
+
+            .footer p {
+                margin-bottom: 0;
+            }
+    </style>
+</head>
+<body>
+    <div class="jumbotron">
+        <h1 class="display-4">DigiCare</h1>
+        <p class="lead">Empowering Healthcare Professionals</p>
+        <a class="nav-link text-dark btn btn-primary btn-lg" asp-area="" asp-controller="Bookings" asp-action="Index" role="button">Book Appointment Now</a>
+
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 content-section">
+                <h2>About Us</h2>
+                <p>We are a team of passionate developers dedicated to creating technology solutions that revolutionize healthcare.</p>
+                <p>Our app, DigiCare, is designed to help clinics and healthcare professionals manage appointments, communicate with patients, and maintain accurate patient records.</p>
+            </div>
+            <div class="col-md-6 content-section">
+                <h2>Contact Us</h2>
+                <ul class="contact-section">
+                    <li>Email: info@digicare.com</li>
+                    <li>Phone: 1-800-123-4567</li>
+                    <li>
+                        7 Ritson Rd, Musgrave, Berea, 4001
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 DigiCare. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

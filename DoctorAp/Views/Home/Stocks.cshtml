@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Stocks";
+    string[] TableHeaders = new string[] {  "Item", "Quantity"};
+    <h1>Stock</h1>
+}
+<div class="table">
+    <table class="table tabletable-bordered table-hover">
+
+        <thead>
+
+            <tr>
+                @{
+                    foreach (var head in TableHeaders)
+                    {
+                        <th>
+                            @head
+                        </th>
+                    }
+                }
+
+            </tr>
+        </thead>
+
+
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    foreach (var Data in Model)
+                    {
+
+                        <tr>
+                            
+                            <td>@Data.Item</td>
+                            <td>@Data.Quantity</td>
+                            
+                        </tr>
+
+                    }
+
+                }
+            }
+        </tbody>
+    </table>
+</div>

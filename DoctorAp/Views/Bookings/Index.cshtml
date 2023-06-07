@@ -1,0 +1,197 @@
+﻿@model IEnumerable<DoctorAp.Models.Booking>
+
+@{
+    ViewData["Title"] = "Booking";
+
+    var user = Context.User; // Get the current user
+    var isAdmin = user.IsInRole("Admin") || user.IsInRole("Doctor"); // Check if the user is an admin or doctor
+
+    // Get the current date
+    var currentDate = DateTime.Now.Date;
+    // Get the user's appointments for the current date
+    var userAppointments = Model.Where(a => a.Email == user.Identity.Name && a.Date.Date == currentDate);
+    // Check if the user has booked two appointments already
+    var hasBookedTwoAppointments = userAppointments.Count() >= 2;
+}
+
+<style>
+    /* CSS styles for the table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    /* CSS styles for the links */
+    .action-link {
+        display: inline-block;
+        padding: 6px 10px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        margin-right: 5px;
+    }
+
+        .action-link:hover {
+            background-color: #0056b3;
+        }
+
+    /* CSS styles for the "Create New" button */
+    .create-button {
+        display: inline-block;
+        padding: 10px 16px;
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .create-button:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+    /* CSS styles for the page heading */
+    h1 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    /* CSS styles for the container */
+    .container {
+        margin: 20px;
+    }
+
+    /* CSS styles for the "Back to List" link */
+    .back-link {
+        display: block;
+        margin-top: 20px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn:hover {
+        text-decoration: none;
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+</style>
+
+<h1>Book Appointment</h1>
+
+
+@if (isAdmin || (!isAdmin && !hasBookedTwoAppointments))
+{
+    <p>
+        <a asp-action="Create" class="create-button">Create Booking</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date) & Time
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if (isAdmin || user.Identity.Name == item.Email)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mobile)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                }
+                else
+                {
+                    <td>Booked</td>
+                    <td></td>
+                    <td></td>
+                }
+                <td>
+                    @{
+                        var roundedDate = item.Date.AddMinutes(-(item.Date.Minute % 30)); // Round down to the nearest 30 minutes
+                        var formattedDate = roundedDate.ToString("yyyy-MM-dd") + "<br />" + roundedDate.ToString("HH:mm");
+                    }
+                    @Html.Raw(formattedDate)
+                </td>
+                <td>
+                    @if (User.IsInRole("Doctor") || User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id" class="action-link">Edit</a>
+                    }
+                    @if (isAdmin || user.Identity.Name == item.Email)
+                    {
+                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id" class="action-link">Details</a>
+                        @if (User.IsInRole("Doctor") || User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id" class="action-link">Delete</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!isAdmin && hasBookedTwoAppointments)
+{
+    <div class="alert alert-warning" role="alert">
+        You have reached the maximum limit of booking two appointments per day, please contact us on 1-800-123-4567.
+    </div>
+}

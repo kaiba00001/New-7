@@ -1,0 +1,125 @@
+﻿@model IEnumerable<DoctorAp.Models.PrescriptionLead>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    /* CSS styles */
+    body {
+        background-color: #f8f9fa;
+        color: #212529;
+        font-family: 'Arial', sans-serif;
+    }
+
+    h1 {
+        color: #000;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .table th,
+        .table td {
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .table th {
+            background-color: #f1f1f1;
+            font-weight: bold;
+        }
+
+        .table a.btn {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 10px;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .table a.btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .table a.btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .table a.btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .table a.btn:hover {
+            text-decoration: none;
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+</style>
+
+<h1>Prescriptions</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Patient_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doctor_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Medication)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dosage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instructions)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patient_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dosage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Instructions)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
